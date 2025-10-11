@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <link rel="stylesheet" href="style.css" />
+    </head>
+    <body>
+        <section>
+            <div class="inputForms-fields">
+                <form id="inputForm">
+                    <input
+                        type="text"
+                        id="fName"
+                        name="fName"
+                        class="editable-form-inputs"
+                        onkeyup="keyUpDetected()"
+                        required
+                    />
+                    <input
+                        type="text"
+                        id="lName"
+                        name="lName"
+                        onkeyup="keyUpDetected()"
+                        class="editable-form-inputs"
+                        required
+                    />
+                    <button id="formSubmitButton" onclick="handleClick()">
+                        Submit
+                    </button>
+                </form>
+            </div>
+            <br />
+            <hr />
+            <br />
+            <div class="table-data">
+                <table id="dataTable">
+                    <thead id="dataTable-header">
+                        <tr>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="dataTable-body">
+                        <tr>
+                            <td>Mohit</td>
+                            <td>Kumar</td>
+                            <td>
+                                <button onclick="edit(0)">Edit</button>
+                                <button onclick="deleteRow(0)">Delete</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+        <script src="app.js"></script>
+    </body>
+</html>

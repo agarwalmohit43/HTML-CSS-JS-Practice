@@ -1,0 +1,61 @@
+#email-container > #add-email {
+    display: block;
+    margin: 0 auto 14px; /* centered horizontally, small bottom gap */
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    background: #fff;
+    cursor: pointer;
+}
+
+#emailLists {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+#emailLists::-webkit-scrollbar {
+    display: none;
+}
+#emailLists li {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    background-color: rgb(217, 217, 217);
+    border-radius: 10px;
+}
+#emailLists li:hover {
+    background-color: #f0f0f0;
+}
+
+#emailLists li > span {
+    cursor: pointer;
+}
+
+.email-title-read {
+    font-weight: normal;
+    color: gray;
+}
+
+.email-title-unread {
+    font-weight: bold;
+    color: black;
+}
+
+.emailItem {
+    display: flex;
+    justify-content: space-between;
+}
+
+.actionDiv-btns {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.actionDiv-btns > button {
+    background-color: rgb(248, 248, 248);
+    cursor: pointer;
+    border-radius: 10px;
+    padding: 5px 10px;
+}
