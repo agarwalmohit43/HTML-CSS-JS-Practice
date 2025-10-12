@@ -8,14 +8,15 @@
 
 <body>
     <section id="email-container">
-        <div id="email-title-bar"></div>
+        <div id="emailTitleBar"></div>
         <div id="emailLists"></div>
         <div id="emailDetails" style="display: none;"></div>
     </section>
-    <script defer src="script.js"></script>
-    <script>
-        let loading = true;
-    </script>
+    <!-- Modern browsers -->
+    <script type="module" src="main.js" defer></script>
+
+    <!-- Fallback -->
+    <script nomodule src="script.js" defer></script>
 </body>
 
 </html>

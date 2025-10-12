@@ -1,7 +1,7 @@
 const emailContainer = document.querySelector("#email-container");
 const emailLists = document.querySelector("#emailLists");
 const emailDetails = document.querySelector("#emailDetails");
-const emailTitleBar = document.querySelector("#email-title-bar");
+const emailTitleBar = document.querySelector("#emailTitleBar");
 
 const initialiseTitleBar = () => {
   const addEmailBtn = document.createElement("button");

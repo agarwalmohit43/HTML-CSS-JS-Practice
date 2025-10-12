@@ -1,0 +1,5 @@
+ES Modules (<script type="module">) are fetched using CORS rules.
+But the file:// origin is not allowed to import other local files for security reasons (so one local file can’t read another arbitrary file on disk).
+
+# macOS example
+open -na "Google Chrome" --args --user-data-dir="/tmp/chrome_dev" --disable-web-security
