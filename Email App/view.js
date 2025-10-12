@@ -1,5 +1,5 @@
 import { getContainers } from "./constants.js";
-import { getEmails } from "./storage.js";
+import { getEmails, selectEmail } from "./storage.js";
 
 function createEmailItem(email) {
   const { id = "", title = "", isOpened = false } = email;
@@ -12,6 +12,8 @@ function createEmailItem(email) {
 
   const checkbox = document.createElement("input");
   checkbox.type = "checkbox";
+  checkbox.dataset.action = "select-email";
+  checkbox.name = "select-email";
 
   const titleSpan = document.createElement("span");
   titleSpan.className = isOpened ? "email-title-read" : "email-title-unread";
@@ -84,6 +86,17 @@ function updateEmailLiUI(id, read) {
   return true;
 }
 
+function selectEmailLi(id, select = true) {
+  const { emailLists } = getContainers();
+  const li = emailLists.querySelector(`li[data-id="${id}"]`);
+  if (!li) return false;
+  const checkbox = li.querySelector('input[name="select-email"]');
+  checkbox.checked = select;
+  selectEmail(id, select);
+
+  return true;
+}
+
 function removeEmailLi(id) {
   const { emailLists } = getContainers();
   const li = emailLists.querySelector(`li[data-id="${id}"]`);
@@ -100,6 +113,8 @@ function titleBarleftSection(leftSection) {
   const selectAll = document.createElement("input");
   selectAll.type = "checkbox";
   selectAll.id = "selectAll-email-checkbox";
+  selectAll.dataset.action = "select-all-email";
+  selectAll.name = "select-all-email";
 
   const label = document.createElement("label");
   label.htmlFor = selectAll.id;
@@ -110,16 +125,25 @@ function titleBarleftSection(leftSection) {
   leftSection.append(checkboxDiv);
 }
 
+function createLoadEmailButton(rightSection, prepend = false) {
+  const loadEmail = document.createElement("button");
+  loadEmail.id = "load-email";
+  loadEmail.textContent = "Load Default emails";
+  loadEmail.dataset.action = "load-email";
+  if (prepend) {
+    rightSection.prepend(loadEmail);
+  } else {
+    rightSection.append(loadEmail);
+  }
+}
+
 function titleBarRightSection(rightSection) {
   const emailData = getEmails();
+  const selectedEmails = emailData.filter((e) => e.isSelected);
 
   // Load email, only if emailData is empty
   if (!emailData.length) {
-    const loadEmail = document.createElement("button");
-    loadEmail.id = "load-email";
-    loadEmail.textContent = "Load Default emails";
-    loadEmail.dataset.action = "load-email";
-    rightSection.append(loadEmail);
+    createLoadEmailButton(rightSection);
   }
 
   // Add email intialise
@@ -127,7 +151,14 @@ function titleBarRightSection(rightSection) {
   addBtn.id = "add-email";
   addBtn.dataset.action = "add-email";
   addBtn.textContent = "Add";
-  rightSection.append(addBtn);
+
+  // Delete email intialise
+  const delBtn = document.createElement("button");
+  delBtn.id = "del-email";
+  delBtn.dataset.action = "del-email";
+  delBtn.textContent = "Delete";
+
+  rightSection.append(addBtn, delBtn);
 }
 
 function titleBarInitialise() {
@@ -153,4 +184,6 @@ export {
   updateEmailLiUI,
   removeEmailLi,
   titleBarInitialise,
+  selectEmailLi,
+  createLoadEmailButton,
 };

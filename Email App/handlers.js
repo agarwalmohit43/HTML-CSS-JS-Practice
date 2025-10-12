@@ -4,6 +4,7 @@ import * as view from "./view.js";
 
 function handleListClick(event) {
   const action = event.target.dataset.action;
+
   const isOpened = event.target.dataset.isOpened === "true" ? true : false;
   if (!action) return;
 
@@ -13,6 +14,9 @@ function handleListClick(event) {
   const id = li.dataset.id;
 
   switch (action) {
+    case "select-email":
+      view.selectEmailLi(id, event.target.checked);
+      break;
     case "toggle-read":
       if (view.updateEmailLiUI(id, true)) {
         storage.updateEmailById(id, { isOpened: true });
@@ -63,6 +67,7 @@ const handleAddEmail = (event) => {
     title: `Email Title - ${Math.floor(Math.random() * 100)}`,
     body: "Lorem ipsum ...",
     isOpened: false,
+    isSelected: false,
   };
 
   storage.pushEmail(newEmail);
@@ -89,17 +94,60 @@ const handleLoadEmail = (event) => {
   checkboxDiv.style.display = "flex";
 };
 
+const handleSelectAllEmail = (event) => {
+  const isChecked = event.target.checked;
+  const emails = storage.getEmails();
+  emails.forEach((email) => {
+    view.selectEmailLi(email.id, isChecked);
+  });
+};
+
+const deleteAllSelectedEmails = () => {
+  const selectedEmails = storage.getSelectedEmails();
+  if (selectedEmails.length === 0) return;
+  selectedEmails.forEach((email) => {
+    storage.deleteEmailById(email.id);
+    view.removeEmailLi(email.id);
+  });
+
+  if (storage.getEmails().length === 0) {
+    const selectAllCheckbox = document.getElementById(
+      "selectAll-email-checkbox"
+    );
+    if (selectAllCheckbox) {
+      selectAllCheckbox.checked = false;
+    }
+    const checkboxDiv = document.querySelector(
+      "section.emailTitleBar-leftSection .titleBar-leftSection-checkboxDiv"
+    );
+    if (checkboxDiv) {
+      checkboxDiv.style.display = "none";
+    }
+    const rightSection = document.querySelector(
+      "section.emailTitleBar-rightSection"
+    );
+    if (!rightSection) return;
+    view.createLoadEmailButton(rightSection, true);
+  }
+};
+
 function handleTitleBarClick(event) {
   const action = event.target.dataset.action;
   if (!action) return;
 
   switch (action) {
+    case "select-all-email":
+      handleSelectAllEmail(event);
+      break;
     case "add-email":
       handleAddEmail(event);
       break;
 
     case "load-email":
       handleLoadEmail(event);
+      break;
+    case "del-email":
+      deleteAllSelectedEmails();
       break;
     default:
       console.warn(`Unknown title bar action: ${action}`);
