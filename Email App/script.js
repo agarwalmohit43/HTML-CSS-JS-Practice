@@ -1,7 +1,17 @@
 const emailContainer = document.querySelector("#email-container");
 const emailLists = document.querySelector("#emailLists");
 const emailDetails = document.querySelector("#emailDetails");
-const addEmailBtn = document.querySelector("#add-email");
+const emailTitleBar = document.querySelector("#email-title-bar");
+
+const initialiseTitleBar = () => {
+  const addEmailBtn = document.createElement("button");
+  addEmailBtn.id = "add-email";
+  addEmailBtn.textContent = "Add Email";
+  addEmailBtn.dataset.action = "add-email";
+
+  emailTitleBar.append(addEmailBtn);
+};
+
 const generateEmail = () => {
   return {
     id: crypto.randomUUID(),
@@ -88,6 +98,7 @@ const renderEmails = () => {
 };
 
 const init = () => {
+  initialiseTitleBar();
   emailData = loadData();
   if (emailData.length === 0) {
     emailData = intialValue;
@@ -97,7 +108,7 @@ const init = () => {
 };
 
 const updateEmailLi = (id, read) => {
-  const li = document.querySelector(`li[data-id='${id}']`);
+  const li = emailLists.querySelector(`li[data-id='${id}']`);
   if (!li) return null;
   const titleSpan = li.querySelector("span");
   titleSpan.classList.toggle("email-title-read", read);
@@ -132,6 +143,16 @@ const deleteEmail = (id, li) => {
   }, 400);
 };
 
+const handleAddEmail = (event) => {
+  const addEmailBtn = event.target.closest("button#add-email");
+  if (!addEmailBtn) return;
+  const newEmail = generateEmail();
+  if (emailLists.appendChild(createEmailItem(newEmail))) {
+    emailData.push(newEmail);
+    saveData();
+  }
+};
+
 emailLists.addEventListener("click", (event) => {
   const action = event.target.dataset.action;
   if (!action) return;
@@ -143,11 +164,16 @@ emailLists.addEventListener("click", (event) => {
   if (action === "delete") deleteEmail(id, li);
 });
 
-addEmailBtn.addEventListener("click", () => {
-  const newEmail = generateEmail();
-  if (emailLists.appendChild(createEmailItem(newEmail))) {
-    emailData.push(newEmail);
-    saveData();
+emailTitleBar.addEventListener("click", (event) => {
+  const action = event.target.dataset.action;
+  if (!action) return;
+  switch (action) {
+    case "add-email":
+      handleAddEmail(event);
+      break;
+    default:
+      console.log("Action fallback for Title Bar");
+      break;
   }
 });
 
