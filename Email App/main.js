@@ -1,21 +1,14 @@
-import { getContainers, intialValue } from "./constants.js";
+import { getContainers } from "./constants.js";
 import * as storage from "./storage.js";
 import * as view from "./view.js";
 import { handleListClick, handleTitleBarClick } from "./handlers.js";
 
 function init() {
-  const { emailContainer, emailLists, emailDetails, emailTitleBar } =
-    getContainers();
+  const { emailLists, emailTitleBar } = getContainers();
 
-  storage.initData(intialValue);
-
+  storage.initData();
+  view.titleBarInitialise();
   view.renderEmails(storage.getEmails());
-
-  const addBtn = document.createElement("button");
-  addBtn.id = "add-email";
-  addBtn.dataset.action = "add-email";
-  addBtn.textContent = "Add Email";
-  emailTitleBar.append(addBtn);
 
   // event delegation
   emailLists.addEventListener("click", handleListClick);

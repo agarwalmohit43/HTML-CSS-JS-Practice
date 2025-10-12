@@ -32,9 +32,27 @@ button:disabled {
 
 #emailTitleBar {
   display: flex;
+  justify-content: space-between;
+  padding: 10px;
+}
+
+.emailTitleBar-leftSection {
+  display: flex;
   justify-content: center;
   align-items: center;
-  padding: 10px;
+  gap: 8px;
+}
+
+.emailTitleBar-rightSection {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+}
+
+.titleBar-leftSection-checkboxDiv {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
 }
 
 #emailLists {
@@ -70,6 +88,13 @@ button:disabled {
   opacity: 0;
   transform: translateY(-6px) scale(0.995);
   pointer-events: none;
+}
+
+.email-content-div {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  align-items: center;
 }
 
 .email-title-read {

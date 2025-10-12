@@ -4,7 +4,8 @@ let emailData = [];
 
 function initData(seed = []) {
   const raw = localStorage.getItem(EMAIL_DATA_KEY);
-  emailData = raw ? JSON.parse(raw) : seed;
+  emailData = raw && raw !== "[]" ? JSON.parse(raw) : seed;
+  save();
   return emailData;
 }
 

@@ -1,9 +1,10 @@
-import { getContainers } from "./constants.js";
+import { getContainers, intialValue } from "./constants.js";
 import * as storage from "./storage.js";
 import * as view from "./view.js";
 
 function handleListClick(event) {
   const action = event.target.dataset.action;
+  const isOpened = event.target.dataset.isOpened === "true" ? true : false;
   if (!action) return;
 
   const li = event.target.closest("li.emailItem");
@@ -21,6 +22,12 @@ function handleListClick(event) {
     case "toggle-unread":
       if (view.updateEmailLiUI(id, false)) {
         storage.updateEmailById(id, { isOpened: false });
+      }
+      break;
+
+    case "toggleEmail-read-unRead":
+      if (view.updateEmailLiUI(id, !isOpened)) {
+        storage.updateEmailById(id, { isOpened: !isOpened });
       }
       break;
 
@@ -64,6 +71,24 @@ const handleAddEmail = (event) => {
   emailLists.appendChild(view.createEmailItem(newEmail));
 };
 
+const handleLoadEmail = (event) => {
+  storage.initData(intialValue);
+  view.renderEmails(storage.getEmails());
+
+  const loadBtn = event.target.closest("button#load-email");
+  if (!loadBtn) return;
+  loadBtn.remove();
+
+  const titleBar = event.currentTarget;
+
+  if (!titleBar) return;
+  const checkboxDiv = titleBar.querySelector(
+    "section.emailTitleBar-leftSection .titleBar-leftSection-checkboxDiv"
+  );
+  if (!checkboxDiv) return;
+  checkboxDiv.style.display = "flex";
+};
+
 function handleTitleBarClick(event) {
   const action = event.target.dataset.action;
   if (!action) return;
@@ -73,6 +98,9 @@ function handleTitleBarClick(event) {
       handleAddEmail(event);
       break;
 
+    case "load-email":
+      handleLoadEmail(event);
+      break;
     default:
       console.warn(`Unknown title bar action: ${action}`);
       break;
