@@ -128,6 +128,9 @@ const deleteAllSelectedEmails = () => {
     );
     if (!rightSection) return;
     view.createLoadEmailButton(rightSection, true);
+
+    const delBtn = document.querySelector("#del-email");
+    if (delBtn) delBtn.disabled = true;
   }
 };
 

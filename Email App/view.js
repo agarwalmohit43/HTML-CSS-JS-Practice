@@ -1,8 +1,8 @@
 import { getContainers } from "./constants.js";
-import { getEmails, selectEmail } from "./storage.js";
+import { getEmails, getSelectedEmails, selectEmail } from "./storage.js";
 
 function createEmailItem(email) {
-  const { id = "", title = "", isOpened = false } = email;
+  const { id = "", title = "", isOpened = false, isSelected = false } = email;
   const li = document.createElement("li");
   li.className = "emailItem";
   li.dataset.id = id;
@@ -14,6 +14,7 @@ function createEmailItem(email) {
   checkbox.type = "checkbox";
   checkbox.dataset.action = "select-email";
   checkbox.name = "select-email";
+  checkbox.checked = isSelected;
 
   const titleSpan = document.createElement("span");
   titleSpan.className = isOpened ? "email-title-read" : "email-title-unread";
@@ -94,6 +95,12 @@ function selectEmailLi(id, select = true) {
   checkbox.checked = select;
   selectEmail(id, select);
 
+  // enable delete button if any email is selected
+  const delBtn = document.querySelector("#del-email");
+  if (!delBtn) return;
+  const selectedEmails = getSelectedEmails();
+  delBtn.disabled = selectedEmails.length === 0;
+
   return true;
 }
 
@@ -157,6 +164,7 @@ function titleBarRightSection(rightSection) {
   delBtn.id = "del-email";
   delBtn.dataset.action = "del-email";
   delBtn.textContent = "Delete";
+  delBtn.disabled = selectedEmails.length === 0;
 
   rightSection.append(addBtn, delBtn);
 }
