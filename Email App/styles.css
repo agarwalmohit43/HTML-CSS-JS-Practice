@@ -4,12 +4,19 @@ button {
   border: 1px solid rgba(0, 0, 0, 0.06);
   background: #cedaf7;
   cursor: pointer;
+  transition-property: background, transform;
+  transition-duration: 0.2s, 0.1s;
+  transition-timing-function: ease-out, ease-out;
+  transition-delay: 0s, 0s;
 }
 
 button:not(:disabled):hover {
   background: #87c8f9;
 }
 
+input[type="checkbox"] {
+  accent-color: #5a298b;
+}
 button:disabled {
   background: #e0e0e0;
   cursor: not-allowed;
