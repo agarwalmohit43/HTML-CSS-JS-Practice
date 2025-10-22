@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Grouping Example</title>
+</head>
+
+<body>
+    <h1>Grouping Example</h1>
+    <p>This is an example of a simple HTML page demonstrating grouping.</p>
+    <form id="infoForm">
+        <fieldset>
+            <legend>Gender</legend>
+            <label>
+                <input type="radio" name="gender" value="male" onchange="" />Male</label>
+            <label>
+                <input type="radio" name="gender" value="female" />Female</label>
+            <label>
+                <input type="radio" name="gender" value="other" checked />Other</label>
+            <label>
+                <input type="radio" name="gender" value="prefer_not_to_say" />Prefer not to say</label>
+        </fieldset>
+
+        <fieldset>
+            <legend>Hobbies</legend>
+            <label>
+                <input type="checkbox" name="hobbies" value="reading" checked />Reading</label>
+            <label>
+                <input type="checkbox" name="hobbies" value="traveling" checked />Traveling</label>
+            <label>
+                <input type="checkbox" name="hobbies" value="cooking" checked />Cooking</label>
+            <label>
+                <input type="checkbox" name="hobbies" value="prefer_not_to_say" />Prefer not to say</label>
+        </fieldset>
+    </form>
+    <script>
+        const form = document.getElementById("infoForm");
+        const gender = document.querySelector('input[name="gender"]:checked');
+        const hobbies = document.querySelectorAll('input[name="hobbies"]:checked');
+        console.log(gender);
+        hobbies.forEach(hobby => {
+            console.log(hobby.value);
+        });
+
+    </script>
+</body>
+
+
+</html>
