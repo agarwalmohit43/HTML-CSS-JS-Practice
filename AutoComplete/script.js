@@ -58,13 +58,19 @@ const debounce = (fn, delay) => {
     }, delay);
   };
 };
-
+let controller = null;
 const searchFunction = async (value) => {
+  if (controller) controller.abort();
+  controller = new AbortController();
   try {
-    const res = await fetch(`https://dummyjson.com/recipes/search?q=${value}`);
+    const res = await fetch(`https://dummyjson.com/recipes/search?q=${value}`, {
+      signal: controller.signal,
+    });
     const data = await res.json();
     if (data.recipes.length) {
       generateSearchResult(data.recipes);
+    } else {
+      hideDisplaySection();
     }
   } catch {
     console.log("Error while fetching", value);
