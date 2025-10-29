@@ -1,0 +1,9 @@
+create 2 divs
+1st one is for input div
+2nd one is for display result
+
+add onchange on input element via js
+
+
+add caching mechanism
+add debouncing mechanism

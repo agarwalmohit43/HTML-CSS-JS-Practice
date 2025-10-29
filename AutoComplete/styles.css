@@ -1,0 +1,30 @@
+main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+input[name="autocomplete-input"] {
+  width: 300px;
+}
+
+.display-result {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #ccc;
+  border-radius: 2px;
+  width: 305px;
+  height: 200px;
+  overflow-y: auto;
+  background: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.span-result {
+  padding: 5px;
+}
+
+.span-result:hover {
+  background-color: grey;
+}
